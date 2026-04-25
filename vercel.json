@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd aurahealth && npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "cd aurahealth && npm install",
+  "framework": "nextjs",
+  "devCommand": "cd aurahealth && npm run dev"
+}
