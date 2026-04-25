@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: hackblr1
+      POSTGRES_USER: hackblr1
+      POSTGRES_PASSWORD: hackblr1_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrantdata:/qdrant/storage
+
+  backend:
+    build:
+      context: ./backend
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql+psycopg://hackblr1:hackblr1_dev_password@postgres:5432/hackblr1
+      QDRANT_URL: http://qdrant:6333
+      CORS_ALLOW_ORIGINS: http://localhost:3000
+    depends_on:
+      - postgres
+      - qdrant
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./aurahealth
+    env_file:
+      - ./aurahealth/.env.local
+    environment:
+      NEXT_PUBLIC_BACKEND_URL: http://localhost:8000
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:
+  qdrantdata:
+

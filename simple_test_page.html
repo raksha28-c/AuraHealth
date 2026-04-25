@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Backend Connection Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .container { background: #f0f8ff; padding: 20px; border-radius: 10px; }
+        .input-area { margin: 20px 0; }
+        input { width: 70%; padding: 10px; font-size: 16px; }
+        button { padding: 10px 20px; font-size: 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .response { background: white; padding: 15px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #007bff; }
+        .emergency { border-left-color: #dc3545; background: #fff5f5; }
+        .ayurveda { border-left-color: #28a745; background: #f8fff8; }
+        .test-buttons { margin: 20px 0; }
+        .test-btn { margin: 5px; padding: 8px 15px; font-size: 14px; background: #6c757d; }
+        .test-btn:hover { background: #545b62; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Backend Connection Test</h1>
+        <p>Test if your frontend can connect to the backend properly!</p>
+        
+        <div class="test-buttons">
+            <button class="test-btn" onclick="testQuery('I have a headache')">Test Headache</button>
+            <button class="test-btn" onclick="testQuery('I have a fever')">Test Fever</button>
+            <button class="test-btn" onclick="testQuery('I have a cough')">Test Cough</button>
+            <button class="test-btn" onclick="testQuery('I have severe chest pain')">Test Emergency</button>
+            <button class="test-btn" onclick="testQuery('I have stomach pain')">Test Stomach</button>
+        </div>
+        
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type your medical question here..." onkeypress="if(event.key==='Enter') sendQuery()">
+            <button onclick="sendQuery()">Send</button>
+        </div>
+        
+        <div id="responses"></div>
+    </div>
+
+    <script>
+        async function sendQuery() {
+            const input = document.getElementById('userInput');
+            const query = input.value.trim();
+            if (!query) return;
+            
+            await testQuery(query, 'test_user');
+            input.value = '';
+        }
+        
+        async function testQuery(query, userId = 'test_user') {
+            const responsesDiv = document.getElementById('responses');
+            
+            // Show user query
+            const userDiv = document.createElement('div');
+            userDiv.innerHTML = `<strong>You:</strong> ${query}`;
+            userDiv.style.margin = '10px 0';
+            responsesDiv.appendChild(userDiv);
+            
+            try {
+                console.log('Sending request to backend...');
+                const response = await fetch('http://localhost:8000/v1/router', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        transcript: query,
+                        consent_to_save: false
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+                const result = await response.json();
+                console.log('Response data:', result);
+                
+                // Create response div
+                const responseDiv = document.createElement('div');
+                responseDiv.className = 'response';
+                
+                // Add domain-specific styling
+                if (result.domain === 'EMERGENCY') {
+                    responseDiv.classList.add('emergency');
+                } else if (result.domain === 'AYURVEDA') {
+                    responseDiv.classList.add('ayurveda');
+                }
+                
+                // Format response
+                let formattedResponse = result.answer_text.replace(/\\n/g, '<br>');
+                
+                responseDiv.innerHTML = `
+                    <div style="font-size: 12px; color: #666; margin-bottom: 5px; font-weight: bold;">
+                        Domain: ${result.domain}
+                    </div>
+                    <div>${formattedResponse}</div>
+                    ${result.emergency ? '<div style="color: red; margin-top: 10px;">🚨 EMERGENCY DETECTED!</div>' : ''}
+                `;
+                
+                responsesDiv.appendChild(responseDiv);
+                window.scrollTo(0, document.body.scrollHeight);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'response emergency';
+                errorDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+                responsesDiv.appendChild(errorDiv);
+            }
+        }
+        
+        // Test connection on page load
+        window.onload = async function() {
+            console.log('Testing backend connection...');
+            try {
+                const response = await fetch('http://localhost:8000/healthz');
+                const result = await response.json();
+                console.log('Backend health:', result);
+                
+                if (result.status === 'ok') {
+                    console.log('✅ Backend connected successfully!');
+                } else {
+                    console.log('❌ Backend connection issue');
+                }
+            } catch (error) {
+                console.error('❌ Cannot connect to backend:', error);
+            }
+        };
+    </script>
+</body>
+</html>

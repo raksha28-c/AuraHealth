@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "topic": "Manipal Hospital (Old Airport Road)",
+    "text": "Manipal Hospital on Old Airport Road is a premier multi-specialty 24/7 facility. It handles trauma, cardiology, and complex surgeries. It is known for high-quality care and international standards."
+  },
+  {
+    "id": 2,
+    "topic": "Aster CMI Hospital",
+    "text": "Aster CMI Hospital is a world-class facility with 24/7 emergency services. It specializes in neurosurgery, transplants, and comprehensive heart care."
+  },
+  {
+    "id": 3,
+    "topic": "Emergency Symptoms",
+    "text": "Critical symptoms like persistent chest pain, sudden numbness, or difficulty breathing require immediate emergency care. Please visit the nearest hospital like Manipal or Fortis immediately."
+  },
+  {
+    "id": 4,
+    "topic": "Family Healthcare",
+    "text": "AuraHealth allows you to manage health history for your whole family including children and elders. Use the profile switcher to keep context separate for accurate history tracking."
+  },
+  {
+    "id": 5,
+    "topic": "Privacy & Security",
+    "text": "Your health data is encrypted. Use Incognito Mode if you wish to have a consultation without saving it to your persistent medical memory."
+  }
+]

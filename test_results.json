@@ -1,0 +1,108 @@
+{
+  "backend_api": {
+    "health_check": {
+      "status": "\u2705 PASS",
+      "response": {
+        "status": "ok"
+      }
+    },
+    "medical_router": {
+      "status": "\u2705 PASS",
+      "response": {
+        "domain": "ALLOPATHY",
+        "detected_language": "en",
+        "answer_text": "\ud83d\udc8a MEDICAL GUIDANCE \ud83d\udc8a\n\nFor your headache:\n1. Apply cold compress to forehead for 15 minutes\n2. Rest in quiet, dark room\n3. Take paracetamol 500mg if needed\n4. Stay hydrated, drink water\n5. Avoid bright lights and loud sounds\n\n\ud83d\udccb Following up on your headache concern...",
+        "guardrail_triggered": false,
+        "sources": [
+          {
+            "type": "medical_knowledge",
+            "confidence": 0.9,
+            "domain": "ALLOPATHY"
+          }
+        ],
+        "memory_context": [],
+        "emergency": null
+      }
+    },
+    "memory_endpoint": {
+      "status": "\u2705 PASS",
+      "response": {
+        "user_id": "test_user",
+        "last": []
+      }
+    }
+  },
+  "qdrant": {
+    "connection": {
+      "status": "\u2705 PASS",
+      "collections": [
+        "ayush_guidelines",
+        "medication_safety",
+        "nutrition",
+        "user_memory"
+      ]
+    },
+    "medication_safety": {
+      "status": "\u2705 PASS"
+    },
+    "ayush_guidelines": {
+      "status": "\u2705 PASS"
+    },
+    "nutrition": {
+      "status": "\u2705 PASS"
+    },
+    "user_memory": {
+      "status": "\u2705 PASS"
+    },
+    "medication_safety_count": {
+      "status": "\u2705 PASS",
+      "count": 2
+    },
+    "ayush_guidelines_count": {
+      "status": "\u2705 PASS",
+      "count": 2
+    },
+    "nutrition_count": {
+      "status": "\u2705 PASS",
+      "count": 2
+    }
+  },
+  "gemini": {
+    "gemini_client": {
+      "status": "\u2705 PASS",
+      "response": "Namaste. I recommend consulting a local healthcare provider for proper medical advice."
+    },
+    "api_key": {
+      "status": "\u2705 PASS",
+      "configured": true
+    }
+  },
+  "frontend": {
+    "frontend_loading": {
+      "status": "\u2705 PASS",
+      "status_code": 200
+    }
+  },
+  "environment": {
+    "gemini_api_key": {
+      "status": "\u2705 PASS",
+      "configured": true
+    },
+    "qdrant_url": {
+      "status": "\u2705 PASS",
+      "configured": true
+    },
+    "qdrant_api_key": {
+      "status": "\u2705 PASS",
+      "configured": true
+    },
+    "jwt_secret": {
+      "status": "\u2705 PASS",
+      "configured": true
+    },
+    "database_url": {
+      "status": "\u2705 PASS",
+      "configured": true
+    }
+  }
+}
