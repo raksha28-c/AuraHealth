@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Heart, Stethoscope, Calendar, Clock, Phone, Mail, Star, Users, Award, TrendingUp, Shield, Activity, Droplets, Brain, Eye, Video, Monitor, Smartphone, Zap } from "lucide-react";
 import DoctorBooking from "./DoctorBooking";
 import WorkingAgent from "./WorkingAgent";
+import EnhancedWorkingAgent from "./EnhancedWorkingAgent";
 import EmergencySystem from "./EmergencySystem";
 import TypingConsultation from "./TypingConsultation";
 import AccessibilityTypingConsultation from "./AccessibilityTypingConsultation";
@@ -154,7 +155,7 @@ export default function BeautifulHomePage() {
         >
           ← Back to Home
         </button>
-        <WorkingAgent activeProfile="default" isIncognito={false} consentToSave={userConsent} onEmergency={() => {}} onCallEnd={() => {}} />
+        <EnhancedWorkingAgent activeProfile="default" isIncognito={false} consentToSave={userConsent} onEmergency={() => {}} onCallEnd={() => {}} />
       </div>
     );
   }
